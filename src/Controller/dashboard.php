@@ -1,17 +1,16 @@
 <?php
-include __DIR__ . '/../../Service/DBConnector.php';
+require_once __DIR__ . '/../../Service/DBConnector.php';
 use Service\DBConnector;
-
 $configs = require __DIR__ . '/../../config/app.conf.php';
 DBConnector::setConfig($configs['indiv_db']);
 
 session_start();
-
 $userId = $_SESSION['userId'] ?? null;
 $username = $_SESSION['username'] ?? null;
 $password = $_SESSION['password'] ?? null;
 $favNumber = null;
 
+// SELECT favNumber query
 $connection = DBConnector::getConnection();
 $sql = "SELECT favNumber FROM user WHERE id = $userId;";
 $statement = $connection->prepare($sql);
@@ -19,10 +18,12 @@ $statement->execute();
 
 $allResults = $statement->fetchAll();
 
+// 
 if(!empty($allResults)){
     $favNumber = $allResults[0]['favNumber'];
 }
 
+// if new favNumber has been send to be updated
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     $favNumberTemp = $_POST['favNumber'] ?? null;
@@ -50,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 	<body>
     	<h1>Welcome <?php echo $username; ?></h1>
     	<?php 
-    	if($favNumberError ?? false){?>
+    	if(!$favNumber ?? $favNumberError ?? false){ ?>
     	   <p>Something went wrong saving new favourite Number</p>
     	<?php }?>
     	<h2>Your favourite number is <?php echo $favNumber ?? 'not set'; ?></h2>
@@ -61,6 +62,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     		<input type="submit">
     	</form> 
     	
-    	<a href="register.php">Logout here</a>
+    	<a href="logout.php">Logout here</a>
     </body>
 </html>
