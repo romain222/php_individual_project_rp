@@ -63,5 +63,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     	</form> 
     	
     	<a href="logout.php">Logout here</a>
+    	<p>If you really want. You can chose to delete your account below :'(</p>
+    	<a href="delete.php">Delete yourself here T-T</a>
     </body>
 </html>
