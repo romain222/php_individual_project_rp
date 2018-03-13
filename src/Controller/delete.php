@@ -18,7 +18,7 @@ $statement->execute();
 <html>
 	<head>
         <meta charset="UTF-8">
-		<title>Deleting account</title>
+		<title>Deleted account</title>
 	</head>
 	<body>
 		<a href="/src/Controller/register.php">Good bye...</a>
